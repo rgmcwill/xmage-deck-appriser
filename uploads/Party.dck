@@ -1,0 +1,41 @@
+NAME:Party
+4 [ELD:390] Castle Vantress
+7 [THB:251] Island
+4 [ELD:386] Castle Ardenvale
+8 [THB:250] Plains
+2 [ZNR:323] Squad Commander
+2 [ZNR:332] Nimble Trapfinder
+2 [ZNR:316] Archpriest of Iona
+1 [ZNR:237] Spoils of Adventure
+1 [ZNR:38] Shepherd of Heroes
+2 [ZNR:52] Concerted Defense
+2 [ZNR:32] Practiced Tactics
+1 [ZNR:81] Skyclave Plunder
+2 [ZNR:17] Journey to Oblivion
+2 [ZNR:368] Linvala, Shield of Sea Gate
+1 [IKO:247] Evolving Wilds
+1 [THB:5] The Birth of Meletis
+2 [KHM:370] Pyre of Heroes
+1 [ZNR:247] Relic Amulet
+2 [THB:34] Revoke Existence
+1 [KHM:8] Divine Gambit
+1 [KHM:77] Strategic Planning
+2 [THB:46] Chain to Memory
+1 [THB:62] Sage of Mysteries
+1 [M21:4] Anointed Chorister
+1 [ZNR:31] Paired Tactician
+1 [KHM:19] Master Skald
+1 [ZNR:8] Cliffhaven Sell-Sword
+1 [M21:40] Swift Response
+1 [ELD:60] Overwhelmed Apprentice
+1 [KTK:38] Dragon's Eye Savants
+1 [ISD:23] Mikaeus, the Lunarch
+1 [WWK:26] Dispel
+1 [SOM:49] Turn Aside
+1 [KHM:49] Brinebarrow Intruder
+1 [MOR:40] Merrow Witsniper
+1 [THS:70] Triton Shorethief
+SB: 2 [ZNR:20] Kitesail Cleric
+SB: 1 [ZNR:45] Anticognition
+LAYOUT MAIN:(1,6)(CARD_TYPE,false,44)|([KHM:370],[KHM:370],[ZNR:247])([M21:4],[ZNR:316],[ZNR:316],[ZNR:8],[ZNR:368],[ZNR:368],[KHM:19],[ZNR:332],[ZNR:332],[ZNR:31],[THB:62],[ZNR:38],[ZNR:323],[ZNR:323],[ELD:60],[KTK:38],[ISD:23],[KHM:49],[MOR:40],[THS:70])([ZNR:17],[ZNR:17],[THB:5])([THB:46],[THB:46],[ZNR:52],[ZNR:52],[ZNR:32],[ZNR:32],[ZNR:237],[M21:40],[WWK:26],[SOM:49])([ELD:386],[ELD:386],[ELD:386],[ELD:386],[ELD:390],[ELD:390],[ELD:390],[ELD:390],[IKO:247],[THB:251],[THB:251],[THB:251],[THB:251],[THB:251],[THB:251],[THB:251],[THB:250],[THB:250],[THB:250],[THB:250],[THB:250],[THB:250],[THB:250],[THB:250])([KHM:8],[THB:34],[THB:34],[ZNR:81],[KHM:77])
+LAYOUT SIDEBOARD:(1,2)(NONE,false,50)|([ZNR:20],[ZNR:20])([ZNR:45])

@@ -1,0 +1,97 @@
+1 [WC02:cr333] Island
+1 [WC97:pm435] Island
+1 [M19:265] Island
+1 [M20:267] Island
+1 [ELD:254] Island
+1 [M13:236] Island
+2 [GK2:27] Island
+1 [9ED:336] Island
+1 [AKR:311] Island
+1 [WC02:cr335b] Island
+1 [PRWK:A03] Island
+1 [WC97:jk437] Island
+1 [6ED:337] Island
+1 [ORI:258] Island
+2 [SLD:64] Island
+1 [XLN:267] Island
+1 [GN2:58] Island
+2 [C13:344] Island
+2 [WC01:ar335a] Island
+2 [PANA:207] Island
+1 [P02:156] Island
+1 [E01:98] Island
+1 [THS:234] Island
+1 [DOM:256] Island
+1 [BRB:111] Island
+1 [USG:337] Island
+1 [2XM:376] Island
+1 [DOM:255] Island
+1 [USG:335] Island
+1 [BRB:114] Island
+1 [MRD:294] Island
+1 [M14:235] Island
+1 [DDM:39] Island
+1 [4ED:368] Island
+1 [THB:62] Sage of Mysteries
+1 [ELD:284] Merfolk Secretkeeper
+1 [ELD:60] Overwhelmed Apprentice
+1 [SHM:36] Drowner Initiate
+1 [MB1:398] Hedron Crab
+1 [ALA:34] Cathartic Adept
+1 [MOR:40] Merrow Witsniper
+1 [KLD:57] Minister of Inquiries
+1 [ZNR:70] Merfolk Windrobber
+1 [ZNR:295] Ruin Crab
+1 [ZNR:88] Zulaport Duelist
+1 [ISD:67] Mindshrieker
+1 [ELD:349] Vantress Gargoyle
+1 [DKA:49] Shriekgeist
+1 [PURL:4] Merfolk Mesmerist
+1 [CM2:48] Riddlekeeper
+1 [ELD:343] Folio of Fancies
+1 [KTK:223] Lens of Clarity
+1 [KTK:216] Altar of the Brood
+1 [CMR:304] Codex Shredder
+1 [RNA:239] Screaming Shield
+1 [2XM:272] Mesmeric Orb
+1 [KLD:227] Perpetual Timepiece
+1 [DKA:41] Increasing Confusion
+1 [ZNR:67] Maddening Cacophony
+1 [SOI:88] Startled Awake
+1 [10E:119] Traumatize
+1 [ZEN:41] Archive Trap
+1 [MB1:459] Predict
+1 [CHK:57] Dampen Thought
+1 [VMA:57] Brain Freeze
+1 [JVC:1] Jace Beleren
+1 [PWAR:54p] Jace, Wielder of Mysteries
+1 [M12:58] Jace, Memory Adept
+1 [GRN:39] Drowned Secrets
+1 [HOU:35] Fraying Sanity
+1 [CM2:45] Memory Erosion
+1 [CMR:633] Court of Cunning
+1 [MB1:502] Sphinx's Tutelage
+1 [SOI:62] Fleeting Memories
+1 [M19:67] Patient Rebuilding
+1 [RTR:32] Chronic Flooding
+1 [M11:59] Jace's Erasure
+1 [ISD:50] Curse of the Bloody Tome
+1 [MB1:508] Stream of Thought
+1 [M11:76] Tome Scour
+1 [MB1:326] Compelling Argument
+1 [MB1:429] Mind Sculpt
+1 [AVR:49] Dreadwaters
+1 [VIS:49] Vision Charm
+1 [ISD:54] Dream Twist
+1 [DKA:52] Thought Scour
+1 [ZNR:59] Glacial Grasp
+1 [HOU:180] Ipnu Rivulet
+1 [HOU:173] Desert of the Mindful
+1 [HOU:182] Scavenger Grounds
+1 [THB:249] Unknown Shores
+1 [ISD:246] Shimmering Grotto
+1 [ELD:345] The Magic Mirror
+1 [DKA:151] Helvault
+SB: 1 [JMP:10] Bruvac the Grandiloquent
+LAYOUT MAIN:(1,8)(NONE,false,44)|([GRN:39],[HOU:35],[CM2:45],[CMR:633],[MB1:502],[SOI:62],[M19:67],[RTR:32],[M11:59],[ISD:50])([THB:62],[ELD:284],[ELD:60],[SHM:36],[MB1:398],[ALA:34],[MOR:40],[KLD:57],[ZNR:70],[ZNR:295],[ZNR:88],[ISD:67],[ELD:349],[DKA:49],[PURL:4],[CM2:48],[ELD:343])([WC02:cr333],[WC97:pm435],[M19:265],[M20:267],[ELD:254],[M13:236],[GK2:27],[9ED:336],[AKR:311],[WC02:cr335b],[PRWK:A03],[GK2:27],[C13:344],[WC01:ar335a],[PANA:207],[SLD:64],[P02:156],[E01:98],[THS:234],[DOM:256],[BRB:111],[USG:337],[2XM:376],[C13:344],[WC01:ar335a],[PANA:207],[DOM:255],[USG:335],[BRB:114],[MRD:294],[M14:235],[DDM:39],[4ED:368],[WC97:jk437],[6ED:337],[ORI:258],[SLD:64],[XLN:267],[GN2:58])([KTK:223],[KTK:216],[CMR:304],[RNA:239],[2XM:272],[KLD:227],[ELD:345],[DKA:151])([JVC:1],[PWAR:54p],[M12:58])([ZEN:41],[MB1:459],[CHK:57],[VMA:57],[VIS:49],[ISD:54],[DKA:52],[ZNR:59])([DKA:41],[ZNR:67],[SOI:88],[10E:119],[MB1:508],[M11:76],[MB1:326],[MB1:429],[AVR:49])([HOU:180],[HOU:173],[HOU:182],[THB:249],[ISD:246])
+LAYOUT SIDEBOARD:(1,1)(NONE,false,50)|([JMP:10])

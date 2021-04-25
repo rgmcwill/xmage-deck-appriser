@@ -23,6 +23,22 @@
         </table>
 
         <script type=text/javascript>
+            curr = $('a.test').first()
+            $(function() {
+                $( document ).ready(function() {
+                    $.getJSON($SCRIPT_ROOT + '/price_card', {
+                        card_name: curr.attr('id')
+                    },
+                    curr = 
+                    function(data) {
+                        console.log(data);
+                        x.text(data);
+                    });
+                return false;
+                });
+            });
+        </script>
+        <!-- <script type=text/javascript>
             x = null
             $(function() {
                 $('a.test').bind('click', function() {
@@ -31,12 +47,12 @@
                         card_name: x.attr('id')
                     }, function(data) {
                 console.log(data);
-                x.text('test');
+                x.text(data);
                 });
                 return false;
             });
         });
-        </script>
+        </script> -->
         <h1>jQuery Example</h1>
         <p><input type=text size=5 name=a> +
             <input type=text size=5 name=b> =

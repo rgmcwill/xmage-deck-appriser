@@ -102,7 +102,10 @@ def add_numbers():
 def price_card():
     a = request.args.get('card_name', 0, type=str)
     print(a)
-    return jsonify('lol')
+    response = requests.get('https://api.scryfall.com/cards/search?q=' + a)
+    dic = response.json()
+    b = dic['data'][0]['prices']['usd']
+    return jsonify(b)
 
 @app.route('/test')
 def index():

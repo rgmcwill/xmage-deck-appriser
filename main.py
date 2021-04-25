@@ -1,9 +1,10 @@
-import os
+import os, json, pprint, requests, time
 from flask import Flask, flash, request, redirect, url_for
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = '/home/svfserver/XDA-test/uploads'
+UPLOAD_FOLDER = '/home/svfserver/XDA/uploads'
 ALLOWED_EXTENSIONS = {'dck'}
+LAND_KEYWORDS = ['Plains', 'Island', 'Swamp', 'Mountain', 'Forest', 'Snow-Covered Plains', 'Snow-Covered Island', 'Snow-Covered Swamp', 'Snow-Covered Mountain', 'Snow-Covered Forest']
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -39,9 +40,57 @@ def upload_file():
     </form>
     '''
 
-def proccess_dck():
-    return True
+def proccess_line(line):
+    x = 0
+    numb = line[x]
+    x = x + 1
+    while len(line)-1 > x and line[x].isdigit():
+        numb = numb + line[x]
+        x = x + 1
+    
+    split_out_card_name = line.split(']')
+    string_with_extra_bits = split_out_card_name[len(split_out_card_name)-1]
+    string = string_with_extra_bits.strip(' ').strip('\n')
+    if LAND_KEYWORDS.count(string) != 0:
+        return {}
+    return {string:numb}
+
+def proccess_dck(deck_name):
+    f = open(UPLOAD_FOLDER + '/' + deck_name, 'r')
+    lines = f.readlines()
+
+    main_board_line_cards = {'MB': {}, 'SB': {}}
+
+    for line in lines:
+        if line[0].isdigit():
+            main_board_line_cards['MB'].update(proccess_line(line))
+        elif line[0:2] == 'SB':
+            main_line = line.split('SB: ').pop()
+            main_board_line_cards['SB'].update(proccess_line(main_line))
+
+    return main_board_line_cards
 
 @app.route('/deck/<deck_name>')
 def deck(deck_name):
-    return 'This deck is named ' + deck_name
+    a = proccess_dck(deck_name)
+    cost = 0
+    for k,v in a['MB'].items():
+        response = requests.get('https://api.scryfall.com/cards/search?q=' + k)
+        dic = response.json()
+        print(response.status_code)
+        b = dic['data'][0]['prices']['usd']
+        if b != None:
+            card_cost  = float(b)
+            cost = cost + card_cost
+        time.sleep(0.75)
+    for k,v in a['SB'].items():
+        response = requests.get('https://api.scryfall.com/cards/search?q=' + k)
+        dic = response.json()
+        print(response.status_code)
+        b = dic['data'][0]['prices']['usd']
+        if b != None:
+            card_cost  = float(b)
+            cost = cost + card_cost
+        time.sleep(0.75)
+    to_return = str(a) + '<div></div>' + str(cost)
+    return to_return

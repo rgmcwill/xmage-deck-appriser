@@ -12,32 +12,68 @@
                 <th>Number of Cards</th>
                 <th>Card Name</th>
                 <th>Cost</th>
+                <th>Card Image</th>
             </tr>
             {% for key, value in result.items() %}
                <tr>
                     <td> {{ value }} </th>
                     <td> {{ key }} </td>
-                    <td><a href=# id="{{ key }}" class=test>X</a></td>>
+                    <td id="{{ loop.index }}" class=price><img src="{{url_for('static', filename='loading.gif')}}" style="width:100px;height:15px;"></td>
+                    <td><img></td>
                </tr>
             {% endfor %}
         </table>
 
+        <table>
+            <tr>
+                <th>Total</th>
+                <td>               </td>
+                <td id=total_cost>0.00</td>
+        </table>
+
         <script type=text/javascript>
-            curr = $('a.test').first()
+            $curr = $("td.price").first()
             $(function() {
                 $( document ).ready(function() {
-                    $.getJSON($SCRIPT_ROOT + '/price_card', {
-                        card_name: curr.attr('id')
-                    },
-                    curr = 
-                    function(data) {
-                        console.log(data);
-                        x.text(data);
-                    });
+                    while($curr.length != 0) {
+                        $.getJSON($SCRIPT_ROOT + '/price_card', {
+                            card_id: $curr.attr('id'),
+                            card_name: $curr.prev().text()
+                        },
+                        function(data) {
+                            console.log(data)
+                            cost_location = $("td.price#" + data.card_id);
+                            if (parseInt(data.card_price) == -1) {
+                                cost_location.text("Price data not avalible");
+                            } else {
+                                price = parseFloat(data.card_price);
+                                multiplyer = parseFloat(cost_location.prev().prev().text());
+                                cost_location.text(multiplyer + " x $" + price.toFixed(2) + " = $" + (price * multiplyer).toFixed(2));
+                                current_total = parseFloat($('td#total_cost').text())
+                                new_total = current_total + (price * multiplyer)
+                                $('td#total_cost').text(new_total.toFixed(2))
+                            }
+                            one = '<img id="card_image" class="zoom" style="height:100px;" src="'
+                            two = '" />'
+                            cost_location.next().prepend(one + data.card_image_url + two)
+                        });
+                        $curr = $curr.closest("tr").next().find("td.price");
+                    }
                 return false;
                 });
             });
         </script>
+        <style>
+            .zoom {
+              transition: transform .2s; /* Animation */
+              height: 100px;
+              margin: 0 auto;
+            }
+            
+            .zoom:hover {
+              transform: scale(3); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+            }
+        </style>
         <!-- <script type=text/javascript>
             x = null
             $(function() {
@@ -53,10 +89,5 @@
             });
         });
         </script> -->
-        <h1>jQuery Example</h1>
-        <p><input type=text size=5 name=a> +
-            <input type=text size=5 name=b> =
-            <span id=result>?</span>
-        <p><a href=# id=calculate>calculate server side</a>
     </body>
 </html>

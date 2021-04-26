@@ -100,12 +100,28 @@ def add_numbers():
 
 @app.route('/price_card')
 def price_card():
-    a = request.args.get('card_name', 0, type=str)
-    print(a)
-    response = requests.get('https://api.scryfall.com/cards/search?q=' + a)
-    dic = response.json()
-    b = dic['data'][0]['prices']['usd']
-    return jsonify(b)
+    card_name = request.args.get('card_name', 0, type=str)
+    card_id = request.args.get('card_id', 0, type=str)
+    card_price = 0
+    index = 0
+    while card_price == 0 or card_price == None:
+        response = requests.get('https://api.scryfall.com/cards/search?unique=prints&q=' + card_name)
+        dic = response.json()
+
+        data = dic.get('data')
+        d = None
+        if len(data)-1 >= index:
+            d = data[index]
+            if d == None:
+                print('testing ' + card_name)
+                card_price = -1
+            else:
+                card_price = d.get('prices').get('usd')
+                card_image_url = d.get('image_uris').get('normal')
+            time.sleep(1)
+            index = index + 1
+    print(card_name, card_id, card_price)
+    return jsonify(card_name=card_name, card_id=card_id, card_price=card_price, card_image_url=card_image_url)
 
 @app.route('/test')
 def index():

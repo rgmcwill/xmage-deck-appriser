@@ -1,93 +1,130 @@
+<!doctype html>
 <html>
-    <head>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script type=text/javascript>
-            $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-          </script>
-    </head>
+  <head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type=text/javascript>
+      $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+    <style>
+      body {font-family: "Raleway", Arial, sans-serif}
+      .w3-row img {margin-bottom: -8px}
+      .main-title {
+        font-size: 40px;
+      }
 
-    <body>
-        <table>
+      td.data {
+        border-top: 1px solid black;
+        /* border-collapse: collapse; */
+      }   
+
+      table.center {
+        margin-left: auto; 
+        margin-right: auto;
+      }
+
+      .total-table {
+          font-size: 30px;
+          margin-bottom: 30px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="w3-content" style="max-width:1500px">
+      <!-- Header -->
+      <header class="w3-container w3-xlarge w3-padding-24">
+        <a href="{{ url_for('index') }}" class="w3-left w3-button w3-white main-title">XDA</a>
+        <a href="{{ url_for('upload') }}" class="w3-right w3-button w3-white">Upload</a>
+      </header>
+    </div>
+
+    <hr style="height:10px;border-width:0;color:gray;background-color:gray">
+
+        <table class="center total-table">
             <tr>
-                <th>Number of Cards</th>
+                <th>Total</th>
+                <td>               </td>
+                <td><span>$</span><span id=total_cost>0.00</span></td>
+        </table>
+
+        <table class="center">
+            <tr>
+                <th>#</th>
                 <th>Card Name</th>
                 <th>Cost</th>
                 <th>Card Image</th>
             </tr>
             {% for key, value in result.items() %}
-               <tr>
-                    <td> {{ value }} </th>
-                    <td> {{ key }} </td>
-                    <td id="{{ loop.index }}" class=price><img src="{{url_for('static', filename='loading.gif')}}" style="width:100px;height:15px;"></td>
-                    <td><img></td>
-               </tr>
+            <tr>
+                    <td class="data"> {{ value }} </th>
+                    <td class="data"> {{ key }} </td>
+                    <td id="{{ loop.index }}" class="price data"><img src="{{url_for('static', filename='loading.gif')}}" style="width:100px;height:15px;"></td>
+                    <td class="data"><img></td>
+            </tr>
             {% endfor %}
         </table>
 
-        <table>
-            <tr>
-                <th>Total</th>
-                <td>               </td>
-                <td id=total_cost>0.00</td>
-        </table>
-
-        <script type=text/javascript>
-            $curr = $("td.price").first()
-            $(function() {
-                $( document ).ready(function() {
-                    while($curr.length != 0) {
-                        $.getJSON($SCRIPT_ROOT + '/price_card', {
-                            card_id: $curr.attr('id'),
-                            card_name: $curr.prev().text()
-                        },
-                        function(data) {
-                            console.log(data)
-                            cost_location = $("td.price#" + data.card_id);
-                            if (parseInt(data.card_price) == -1) {
-                                cost_location.text("Price data not avalible");
-                            } else {
-                                price = parseFloat(data.card_price);
-                                multiplyer = parseFloat(cost_location.prev().prev().text());
-                                cost_location.text(multiplyer + " x $" + price.toFixed(2) + " = $" + (price * multiplyer).toFixed(2));
-                                current_total = parseFloat($('td#total_cost').text())
-                                new_total = current_total + (price * multiplyer)
-                                $('td#total_cost').text(new_total.toFixed(2))
-                            }
-                            one = '<img id="card_image" class="zoom" style="height:100px;" src="'
-                            two = '" />'
-                            cost_location.next().prepend(one + data.card_image_url + two)
-                        });
-                        $curr = $curr.closest("tr").next().find("td.price");
-                    }
-                return false;
-                });
-            });
-        </script>
-        <style>
-            .zoom {
-              transition: transform .2s; /* Animation */
-              height: 100px;
-              margin: 0 auto;
-            }
-            
-            .zoom:hover {
-              transform: scale(3); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
-            }
-        </style>
-        <!-- <script type=text/javascript>
-            x = null
-            $(function() {
-                $('a.test').bind('click', function() {
-                    x = $(this)
+    <script type=text/javascript>
+        $curr = $("td.price").first()
+        $(function() {
+            $( document ).ready(function() {
+                while($curr.length != 0) {
                     $.getJSON($SCRIPT_ROOT + '/price_card', {
-                        card_name: x.attr('id')
-                    }, function(data) {
-                console.log(data);
-                x.text(data);
-                });
-                return false;
+                        card_id: $curr.attr('id'),
+                        card_name: $curr.prev().text()
+                    },
+                    function(data) {
+                        console.log(data)
+                        cost_location = $("td.price#" + data.card_id);
+                        if (parseInt(data.card_price) == -1) {
+                            cost_location.text("Price data not avalible");
+                        } else {
+                            price = parseFloat(data.card_price);
+                            multiplyer = parseFloat(cost_location.prev().prev().text());
+                            cost_location.text(multiplyer + " x $" + price.toFixed(2) + " = $" + (price * multiplyer).toFixed(2));
+                            current_total = parseFloat($('span#total_cost').text())
+                            new_total = current_total + (price * multiplyer)
+                            // animateValue("total_cost", current_total, new_total, 2)
+                            $('span#total_cost').text(new_total.toFixed(2))
+                        }
+                        one = '<img id="card_image" class="zoom" style="height:100px;" src="'
+                        two = '" />'
+                        cost_location.next().prepend(one + data.card_image_url + two)
+                    });
+                    $curr = $curr.closest("tr").next().find("td.price");
+                }
+            return false;
             });
         });
-        </script> -->
-    </body>
+
+        function animateValue(id, start, end, duration) {
+            if (start === end) return;
+            var range = end - start;
+            var current = start;
+            var increment = end > start? 1 : -1;
+            var stepTime = Math.abs(Math.floor(duration / range));
+            var obj = document.getElementById(id);
+            var timer = setInterval(function() {
+                current += increment;
+                obj.innerHTML = current;
+                if (current == end) {
+                    clearInterval(timer);
+                }
+            }, stepTime);
+        }
+    </script>
+    <style>
+        .zoom {
+          transition: transform .2s; /* Animation */
+          height: 100px;
+          margin: 0 auto;
+        }
+        
+        .zoom:hover {
+          transform: scale(3); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+        }
+    </style>
+  </body>
 </html>

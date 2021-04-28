@@ -13,6 +13,10 @@
       .main-title {
         font-size: 40px;
       }
+
+      .upload-block {
+        margin-top: 30px;
+      }
     </style>
   </head>
 
@@ -21,10 +25,18 @@
       <!-- Header -->
       <header class="w3-container w3-xlarge w3-padding-24">
         <a href="{{ url_for('index') }}" class="w3-left w3-button w3-white main-title">XDA</a>
-        <a href="{{ url_for('upload') }}" class="w3-right w3-button w3-white">Upload</a>
       </header>
     </div>
 
     <hr style="height:10px;border-width:0;color:gray;background-color:gray">
+
+    
+    <div class="w3-center upload-block">
+      <p>Upload .dck</p>
+      <form method=post enctype=multipart/form-data>
+      <input value="Upload .dck" type=file name=file>
+      <input type=submit value=Upload>
+    </form>
+    </div>
   </body>
 </html>

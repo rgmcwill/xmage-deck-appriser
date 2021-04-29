@@ -1,5 +1,5 @@
 import os, json, pprint, requests, time, threading, hashlib
-from flask import Flask, flash, request, redirect, url_for, jsonify, render_template
+from flask import Flask, flash, request, redirect, url_for, jsonify, render_template, session
 from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)) +'/uploads'
@@ -10,10 +10,12 @@ LAND_KEYWORDS = ['Plains', 'Island', 'Swamp', 'Mountain', 'Forest', 'Snow-Covere
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-
 @app.before_first_request
 def activate_job():
     print('starting')
+
+def md5_of_file(path):
+    return hashlib.md5(open(path,'rb').read()).hexdigest()
 
 def cache_request(search):
     data = {}
@@ -56,11 +58,13 @@ def allowed_file(filename):
 
 @app.route('/')
 def index():
-    path = UPLOAD_FOLDER + '/'
+    path = BASE_CACHE_PATH + '/decks/'
     result = {}
     for deck in os.listdir(path):
         if os.path.isfile(path+deck):
-            result.update({deck[:-4]:deck})
+            with open(BASE_CACHE_PATH + "/decks/" + deck) as json_file:
+                full_deck = json.load(json_file)
+            result.update({deck[:-5]:{'deck_name':full_deck.get('deck_name'), 'by_user': full_deck.get('by_user')}})
     return render_template('index.html', result=result)
 
 def proccess_line(line):
@@ -94,24 +98,38 @@ def proccess_dck(deck_name):
 
     return main_board_line_cards
 
-@app.route('/deck/<deck_name>')
-def deck(deck_name):
-    deck_name=deck_name+'.dck'
-    a = proccess_dck(deck_name)
-    cost = 0
-    to_return = str(a) + '<div></div>' + str(cost)
-    temp = {}
-    temp.update(a.get('MB'))
-    temp.update(a.get('SB'))
-    print(temp)
-    return render_template('deck.html', result=temp)
+@app.route('/deck/<deck_hash>')
+def deck(deck_hash):
+    s = session.get('messages')
+    deck = {}
+    #When the deck was uploaded it will recomput the deck
+    if s != None:
+        messages = json.loads(session['messages'])
+        #And then write to file
+        deck_name=messages.get('deck_name')
+        by_user=messages.get('by_user')
+        deck = proccess_dck(deck_name)
+        deck.update({"deck_name": deck_name, "by_user": by_user})
+
+        with open(BASE_CACHE_PATH + "/decks/" + deck_hash + ".json", "w") as json_file:
+            json.dump(deck, json_file)
+
+    #Will read from file
+    with open(BASE_CACHE_PATH + "/decks/" + deck_hash + ".json") as json_file:
+        deck = json.load(json_file)
+    deck_name = deck.get('deck_name')
+    by_user = deck.get('by_user')
+    flat_deck = {}
+    flat_deck.update(deck.get('MB'))
+    flat_deck.update(deck.get('SB'))
+    # print(temp)
+    return render_template('deck.html', result=flat_deck, deck_name=deck_name, by_user=by_user)
 
 @app.route('/price_card')
 def price_card():
     card_name = request.args.get('card_name', 0, type=str)
     card_id = request.args.get('card_id', 0, type=str)
     card_price = 0
-    index = 0
 
     dic = cache_request(card_name)
     data = dic.get('data')
@@ -148,8 +166,9 @@ def price_card():
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
-    person_name = request.args.get('by_user', 0, type=str)
     if request.method == 'POST':
+        by_user = request.form.get('by_user')
+        # person_name = request.data.by_user
         # check if the post request has the file part
         if 'file' not in request.files:
             flash('No file part')
@@ -163,7 +182,9 @@ def upload():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('deck', deck_name=filename[:-4]))
+            data = json.dumps({"by_user":by_user, "deck_name": filename})
+            session['messages'] = data
+            return redirect(url_for('deck', deck_hash=md5_of_file(UPLOAD_FOLDER+'/'+filename)))
     # print(UPLOAD_FOLDER)
     return render_template('upload.html')
 

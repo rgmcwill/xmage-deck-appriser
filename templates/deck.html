@@ -28,6 +28,12 @@
           font-size: 30px;
           margin-bottom: 30px;
       }
+
+      h2.deck-title {
+        font-size: 35px;
+        text-align: center;
+        margin: auto;
+      }
     </style>
   </head>
 
@@ -42,6 +48,7 @@
 
     <hr style="height:10px;border-width:0;color:gray;background-color:gray">
 
+    <h2 class="deck-title"><b>{{ deck_name.replace('_', ' ') }} | By: {{ by_user }}</b></h2>
         <table class="center total-table">
             <tr>
                 <th>Total</th>

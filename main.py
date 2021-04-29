@@ -56,7 +56,12 @@ def allowed_file(filename):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    path = UPLOAD_FOLDER + '/'
+    result = {}
+    for deck in os.listdir(path):
+        if os.path.isfile(path+deck):
+            result.update({deck[:-4]:deck})
+    return render_template('index.html', result=result)
 
 def proccess_line(line):
     x = 0
@@ -74,6 +79,7 @@ def proccess_line(line):
     return {string:numb}
 
 def proccess_dck(deck_name):
+    print(deck_name)
     f = open(UPLOAD_FOLDER + '/' + deck_name, 'r')
     lines = f.readlines()
 
@@ -126,7 +132,10 @@ def price_card():
                     if card.get('card_faces') == None:
                         imageURL = card.get('image_uris').get('normal')
                     else:
-                        imageURL = card.get('card_faces')[0].get('image_uris').get('normal')
+                        if card.get('card_faces')[0].get('image_uris') == None:
+                            imageURL = card.get('image_uris').get('normal')
+                        else:
+                            imageURL = card.get('card_faces')[0].get('image_uris').get('normal')
                 if float(price) > maxPrice:
                     maxPrice = float(price)
 
@@ -139,6 +148,7 @@ def price_card():
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
+    person_name = request.args.get('by_user', 0, type=str)
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
@@ -156,3 +166,9 @@ def upload():
             return redirect(url_for('deck', deck_name=filename[:-4]))
     # print(UPLOAD_FOLDER)
     return render_template('upload.html')
+
+#This is what needs to be stored in the deck.jsons
+# - by_user
+# - deck_name
+# - Commander // Most expencive in deck
+# - Price

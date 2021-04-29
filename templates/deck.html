@@ -58,8 +58,8 @@
             </tr>
             {% for key, value in result.items() %}
             <tr>
-                    <td class="data"> {{ value }} </th>
-                    <td class="data"> {{ key }} </td>
+                    <td class="data">{{ value }}</th>
+                    <td class="data">{{ key }}</td>
                     <td id="{{ loop.index }}" class="price data"><img src="{{url_for('static', filename='loading.gif')}}" style="width:100px;height:15px;"></td>
                     <td class="data"><img></td>
             </tr>
